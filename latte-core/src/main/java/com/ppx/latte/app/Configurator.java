@@ -1,6 +1,10 @@
 package com.ppx.latte.app;
 
-import java.util.WeakHashMap;
+import com.joanzapata.iconify.IconFontDescriptor;
+import com.joanzapata.iconify.Iconify;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 配置信息存储及获取
@@ -8,13 +12,16 @@ import java.util.WeakHashMap;
  */
 
 public class Configurator {
-    private static final WeakHashMap<String, Object> LATTE_CONFIGS = new WeakHashMap<>();
+    // 存储配置信息
+    private static final HashMap<String, Object> LATTE_CONFIGS = new HashMap<>();
+    // 存储字体图标
+    private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
 
     private Configurator() {
         LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(), false);
     }
 
-    final WeakHashMap<String, Object> getLatteConfigs() {
+    final HashMap<String, Object> getLatteConfigs() {
         return LATTE_CONFIGS;
     }
 
@@ -28,11 +35,29 @@ public class Configurator {
     }
 
     public final void configure() {
+        initIcon();
         LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(), true);
     }
 
+    // 添加域名
     public final Configurator withApiHost(String host) {
         LATTE_CONFIGS.put(ConfigType.API_HOST.name(), host);
+        return this;
+    }
+
+    // 初始化字体图标
+    private void initIcon() {
+        if (ICONS.size() > 0) {
+            final Iconify.IconifyInitializer initializer = Iconify.with(ICONS.get(0));
+            for (int i = 1; i < ICONS.size(); i++) {
+                initializer.with(ICONS.get(i));
+            }
+        }
+    }
+
+    // 添加自己的字体图标
+    public final Configurator withIcon(IconFontDescriptor descriptor) {
+        ICONS.add(descriptor);
         return this;
     }
 

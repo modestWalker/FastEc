@@ -30,16 +30,17 @@ public class ExampleDelegate extends LatteDelegate {
         // 获取程序可用最大内存
 //        int maxMemory = (int) (Runtime.getRuntime().maxMemory() / (1024 * 1024));
 //        Toast.makeText(Latte.getApplication(), maxMemory + "MB", Toast.LENGTH_SHORT).show();
+        testRestClient();
     }
 
     private void testRestClient() {
         RestClient.builder()
-                .url("")
-                .params("", "")
+                .url("http://news.baidu.com/")
+                .loader(getContext())
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
-
+                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                     }
                 })
                 .error(new IError() {
@@ -53,6 +54,8 @@ public class ExampleDelegate extends LatteDelegate {
                     public void onFailure() {
 
                     }
-                }).build();
+                })
+                .build()
+                .get();
     }
 }

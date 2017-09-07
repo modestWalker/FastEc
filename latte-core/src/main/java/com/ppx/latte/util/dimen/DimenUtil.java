@@ -1,4 +1,4 @@
-package com.ppx.latte.util;
+package com.ppx.latte.util.dimen;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;

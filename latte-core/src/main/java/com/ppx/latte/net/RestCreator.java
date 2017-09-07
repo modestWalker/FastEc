@@ -3,7 +3,6 @@ package com.ppx.latte.net;
 import com.ppx.latte.app.ConfigType;
 import com.ppx.latte.app.Latte;
 
-import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 

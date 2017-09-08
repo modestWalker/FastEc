@@ -3,7 +3,6 @@ package com.ppx.latte.app;
 import android.content.Context;
 
 import java.util.HashMap;
-import java.util.WeakHashMap;
 
 /**
  * 工具类
@@ -11,16 +10,25 @@ import java.util.WeakHashMap;
  */
 
 public class Latte {
+    // 配置初始化
     public static Configurator init(Context context) {
-        getConfigurations().put(ConfigType.APPLICATION_CONTEXT.name(), context.getApplicationContext());
+        Configurator.getInstance().getLatteConfigs()
+                .put(ConfigKeys.APPLICATION_CONTEXT, context.getApplicationContext());
         return Configurator.getInstance();
     }
 
-    public static HashMap<String, Object> getConfigurations() {
-        return Configurator.getInstance().getLatteConfigs();
+    // 获取配置类实例
+    public static Configurator getConfigurator() {
+        return Configurator.getInstance();
     }
 
-    public static Context getApplication() {
-        return (Context) getConfigurations().get(ConfigType.APPLICATION_CONTEXT.name());
+    // 获取配置信息项
+    public static <T> T getConfiguration(Object key) {
+        return getConfigurator().getconfiguration(key);
+    }
+
+    // 获取全局上下文
+    public static Context getApplicationContext() {
+        return getConfiguration(ConfigKeys.APPLICATION_CONTEXT);
     }
 }

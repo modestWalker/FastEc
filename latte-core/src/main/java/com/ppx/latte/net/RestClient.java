@@ -8,8 +8,8 @@ import com.ppx.latte.net.callback.IRequest;
 import com.ppx.latte.net.callback.ISuccess;
 import com.ppx.latte.net.callback.RequestCallBacks;
 import com.ppx.latte.net.download.DownloadHandler;
-import com.ppx.latte.ui.LatteLoader;
-import com.ppx.latte.ui.LoaderStyle;
+import com.ppx.latte.ui.loader.LatteLoader;
+import com.ppx.latte.ui.loader.LoaderStyle;
 
 import java.io.File;
 import java.util.Map;
@@ -20,7 +20,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.http.Multipart;
 
 /**
  * 网络请求实现类

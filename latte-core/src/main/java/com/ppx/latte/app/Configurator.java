@@ -6,6 +6,8 @@ import com.joanzapata.iconify.Iconify;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import okhttp3.Interceptor;
+
 /**
  * 配置信息存储及获取
  * Created by PPX on 2017/8/31.
@@ -13,18 +15,17 @@ import java.util.HashMap;
 
 public class Configurator {
     // 存储配置信息
-    private static final HashMap<String, Object> LATTE_CONFIGS = new HashMap<>();
+    private static final HashMap<Object, Object> LATTE_CONFIGS = new HashMap<>();
     // 存储字体图标
     private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
+    // 拦截器集合
+    private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
 
     private Configurator() {
-        LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(), false);
+        LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY, false);
     }
 
-    final HashMap<String, Object> getLatteConfigs() {
-        return LATTE_CONFIGS;
-    }
-
+    // 获取唯一实例
     public static Configurator getInstance() {
         return Holder.INSTANCE;
     }
@@ -34,14 +35,25 @@ public class Configurator {
         private static final Configurator INSTANCE = new Configurator();
     }
 
+    // 获取配置信息集合
+    final HashMap<Object, Object> getLatteConfigs() {
+        return LATTE_CONFIGS;
+    }
+
+    // 进行配置
     public final void configure() {
         initIcon();
-        LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(), true);
+        LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY, true);
     }
 
     // 添加域名
     public final Configurator withApiHost(String host) {
-        LATTE_CONFIGS.put(ConfigType.API_HOST.name(), host);
+        LATTE_CONFIGS.put(ConfigKeys.API_HOST, host);
+        return this;
+    }
+
+    public final Configurator withLoaderDelayed(long delayed) {
+        LATTE_CONFIGS.put(ConfigKeys.LOADER_DELAYED, delayed);
         return this;
     }
 
@@ -61,17 +73,35 @@ public class Configurator {
         return this;
     }
 
+    // 添加拦截器
+    public final Configurator withInterceptor(Interceptor interceptor) {
+        INTERCEPTORS.add(interceptor);
+        LATTE_CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
+        return this;
+    }
+
+    // 添加多个拦截器
+    public final Configurator withInterceptors(ArrayList<Interceptor> interceptors) {
+        INTERCEPTORS.addAll(interceptors);
+        LATTE_CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
+        return this;
+    }
+
     // 判断配置是否完成
     private void checkConfiguration() {
-        final boolean isReady = (boolean) LATTE_CONFIGS.get(ConfigType.CONFIG_READY.name());
+        final boolean isReady = (boolean) LATTE_CONFIGS.get(ConfigKeys.CONFIG_READY);
         if (!isReady) {
             throw new RuntimeException("Configuration is not ready,call configure");
         }
     }
 
     @SuppressWarnings("unchecked")
-    final <T> T getconfiguration(Enum<ConfigType> key) {
+    final <T> T getconfiguration(Object key) {
         checkConfiguration();
+        final Object value = LATTE_CONFIGS.get(key);
+        if (value == null) {
+            throw new NullPointerException(key.toString() + " IS NULL");
+        }
         return (T) LATTE_CONFIGS.get(key);
     }
 }

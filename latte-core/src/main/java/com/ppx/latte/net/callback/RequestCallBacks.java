@@ -2,8 +2,8 @@ package com.ppx.latte.net.callback;
 
 import android.os.Handler;
 
-import com.ppx.latte.ui.LatteLoader;
-import com.ppx.latte.ui.LoaderStyle;
+import com.ppx.latte.ui.loader.LatteLoader;
+import com.ppx.latte.ui.loader.LoaderStyle;
 
 import retrofit2.Call;
 import retrofit2.Callback;

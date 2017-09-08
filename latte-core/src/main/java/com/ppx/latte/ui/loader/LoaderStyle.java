@@ -1,4 +1,4 @@
-package com.ppx.latte.ui;
+package com.ppx.latte.ui.loader;
 
 /**
  * Created by PPX on 2017/9/5.

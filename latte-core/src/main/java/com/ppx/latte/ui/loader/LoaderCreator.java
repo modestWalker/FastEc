@@ -1,4 +1,4 @@
-package com.ppx.latte.ui;
+package com.ppx.latte.ui.loader;
 
 import android.content.Context;
 

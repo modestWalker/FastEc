@@ -29,13 +29,13 @@ public class ExampleDelegate extends LatteDelegate {
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         // 获取程序可用最大内存
 //        int maxMemory = (int) (Runtime.getRuntime().maxMemory() / (1024 * 1024));
-//        Toast.makeText(Latte.getApplication(), maxMemory + "MB", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(Latte.getApplicationContext(), maxMemory + "MB", Toast.LENGTH_SHORT).show();
         testRestClient();
     }
 
     private void testRestClient() {
         RestClient.builder()
-                .url("http://news.baidu.com/")
+                .url("http://127.0.0.1/index")
                 .loader(getContext())
                 .success(new ISuccess() {
                     @Override

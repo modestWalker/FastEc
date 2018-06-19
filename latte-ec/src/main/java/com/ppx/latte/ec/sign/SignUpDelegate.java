@@ -40,7 +40,7 @@ public class SignUpDelegate extends LatteDelegate {
         if (checkForm()) {
             RestClient.builder()
                     .url("http://192.168.37.17:8080/RestServer/data/user_profile.json")
-//                    .params("", "")
+                    .params("", "")
                     .success(new ISuccess() {
                         @Override
                         public void onSuccess(String response) {
